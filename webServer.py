@@ -4,7 +4,7 @@ import sys
 def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
-    serverSocket.bind(("", port))
+    serverSocket.bind(("10.102.37.150", port))
 
     serverSocket.listen(1)
 
@@ -20,11 +20,12 @@ def webServer(port=13331):
 
             if f:
                 outputdata = (
-                    "HTTP/1.1 200 OK\r\n"
-                    "Content-Type: text/html; charset=UTF-8\r\n"
-                    "\r\n"
+                    b"HTTP/1.1 200 OK\r\n"
+                    b"Content-Type: text/html; charset=UTF-8\r\n"
+                    b"\r\n"
                 )
                 connectionSocket.send(outputdata)
+                print("200 OK")
 
                 for i in f:
                     connectionSocket.send(i)
@@ -32,25 +33,27 @@ def webServer(port=13331):
 
             else:
                 outputdata = (
-                    "HTTP/1.1 404 Not Found\r\n"
-                    "Content-Type: text/html; charset=UTF-8\r\n"
-                    "\r\n"
+                    b"HTTP/1.1 404 Not Found\r\n"
+                    b"Content-Type: text/html; charset=UTF-8\r\n"
+                    b"\r\n"
                 )
                 connectionSocket.send(outputdata)
-
+                print("404 Not Found")
             connectionSocket.close()
 
         except Exception as e:
             print(f"Error: {e}")
             outputdata = (
-                "HTTP/1.1 500 Internal Server Error\r\n"
-                "Content-Type: text/html; charset=UTF-8\r\n"
-                "\r\n"
+                b"HTTP/1.1 500 Internal Server Error\r\n"
+                b"Content-Type: text/html; charset=UTF-8\r\n"
+                b"\r\n"
             )
             connectionSocket.send(outputdata)
+            print("500 Internal Server Error")
         connectionSocket.close()
 
-sys.exit()
+# sys.exit()
+
 
 if __name__ == "__main__":
     webServer(13331)
