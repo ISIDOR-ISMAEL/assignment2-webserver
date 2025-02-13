@@ -51,8 +51,7 @@ def webServer(port=13331):
             connectionSocket.send(outputdata)
             print("500 Internal Server Error")
         connectionSocket.close()
-
-# sys.exit()
+        sys.exit()
 
 
 if __name__ == "__main__":
