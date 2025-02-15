@@ -4,12 +4,11 @@ import sys
 def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
-    serverSocket.bind(("127.0.0.1", port))
+    serverSocket.bind(("10.102.37.150", port))
 
     serverSocket.listen(1)
 
     while True:
-        print('Ready to serve...')
         connectionSocket, addr = serverSocket.accept()
 
         try:
@@ -40,13 +39,13 @@ def webServer(port=13331):
             connectionSocket.close()
 
         except Exception as e:
+            print(f"Error: {e}")
             outputdata = (
                 "HTTP/1.1 500 Internal Server Error\r\n"
                 "Content-Type: text/html; charset=UTF-8\r\n"
                 "\r\n"
             )
             connectionSocket.send(outputdata.encode())
-            print("500 Internal Server Error")
         connectionSocket.close()
         sys.exit()
 
