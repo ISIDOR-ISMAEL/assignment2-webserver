@@ -17,6 +17,7 @@ def webServer(port=13331):
 
             f = open(filename[1:], "rb")
             htmlcontent = f.read()
+            f.close()
 
             outputdata = (
                 "HTTP/1.1 200 OK\r\n"
@@ -30,7 +31,6 @@ def webServer(port=13331):
 
             for i in f:
                 connectionSocket.sendall(i)
-            f.close()
 
         except Exception as e:
             outputdata = (
