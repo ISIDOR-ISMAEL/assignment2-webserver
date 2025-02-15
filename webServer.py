@@ -16,6 +16,7 @@ def webServer(port=13331):
             filename = message.split()[1]
 
             f = open(filename[1:], "rb")
+            htmlcontent = f.read()
 
             outputdata = (
                 "HTTP/1.1 200 OK\r\n"
@@ -24,7 +25,8 @@ def webServer(port=13331):
                 "Connection: close\r\n"
                 "\r\n"
             )
-            connectionSocket.send(outputdata.encode())
+            connectionSocket.sendall(outputdata.encode())
+            connectionSocket.sendall(htmlcontent)
 
             for i in f:
                 connectionSocket.sendall(i)
