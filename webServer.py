@@ -25,10 +25,8 @@ def webServer(port=13331):
                 "Content-Type: text/html; charset=UTF-8\r\n"
                 "Connection: close\r\n"
                 "\r\n"
-                htmlcontent
             )
-            connectionSocket.sendall(outputdata.encode())
-            connectionSocket.sendall(htmlcontent)
+            connectionSocket.sendall(outputdata.encode() + htmlcontent)
 
             for i in f:
                 connectionSocket.sendall(i)
