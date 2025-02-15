@@ -9,7 +9,6 @@ def webServer(port=13331):
     serverSocket.listen(1)
 
     while True:
-        #print('Ready to serve...')
         connectionSocket, addr = serverSocket.accept()
 
         try:
@@ -25,7 +24,6 @@ def webServer(port=13331):
                     b"\r\n"
                 )
                 connectionSocket.send(outputdata)
-                #print("200 OK")
 
                 for i in f:
                     connectionSocket.send(i)
@@ -38,18 +36,15 @@ def webServer(port=13331):
                     b"\r\n"
                 )
                 connectionSocket.send(outputdata)
-                #print("404 Not Found")
             connectionSocket.close()
 
         except Exception as e:
-            #print(f"Error: {e}")
             outputdata = (
                 b"HTTP/1.1 500 Internal Server Error\r\n"
                 b"Content-Type: text/html; charset=UTF-8\r\n"
                 b"\r\n"
             )
             connectionSocket.send(outputdata)
-            #print("500 Internal Server Error")
         connectionSocket.close()
         sys.exit()
 
