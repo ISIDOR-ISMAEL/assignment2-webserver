@@ -20,23 +20,26 @@ def webServer(port=13331):
             outputdata = (
                 "HTTP/1.1 200 OK\r\n"
                 "Content-Type: text/html; charset=UTF-8\r\n"
+                "Server: MySimpleServer\r\n"
+                "Connection: close\r\n"
                 "\r\n"
             )
             connectionSocket.send(outputdata.encode())
 
             for i in f:
-                connectionSocket.send(i)
+                connectionSocket.sendall(i)
             f.close()
 
         except Exception as e:
             outputdata = (
                 "HTTP/1.1 404 Not Found\r\n"
                 "Content-Type: text/html; charset=UTF-8\r\n"
+                "Server: MySimpleServer\r\n"
+                "Connection: close\r\n"
                 "\r\n"
             )
-            connectionSocket.send(outputdata.encode())
+            connectionSocket.sendall(outputdata.encode())
         connectionSocket.close()
-        sys.exit()
 
 
 if __name__ == "__main__":
