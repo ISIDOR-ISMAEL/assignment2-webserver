@@ -9,7 +9,6 @@ def webServer(port=13331):
     serverSocket.listen(1)
 
     while True:
-        print('Ready to serve...')
         connectionSocket, addr = serverSocket.accept()
 
         try:
@@ -24,7 +23,6 @@ def webServer(port=13331):
                 "\r\n"
             )
             connectionSocket.send(outputdata.encode())
-            print("200 OK")
 
             for i in f:
                 connectionSocket.send(i)
@@ -37,7 +35,6 @@ def webServer(port=13331):
                 "\r\n"
             )
             connectionSocket.send(outputdata.encode())
-            print("404 Not Found")
         connectionSocket.close()
         sys.exit()
 
