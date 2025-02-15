@@ -4,11 +4,12 @@ import sys
 def webServer(port=13331):
     serverSocket = socket(AF_INET, SOCK_STREAM)
 
-    serverSocket.bind(("10.102.37.150", port))
+    serverSocket.bind(("127.0.0.1", port))
 
     serverSocket.listen(1)
 
     while True:
+        print('Ready to serve...')
         connectionSocket, addr = serverSocket.accept()
 
         try:
@@ -17,35 +18,26 @@ def webServer(port=13331):
 
             f = open(filename[1:], "rb")
 
-            if f:
-                outputdata = (
-                    "HTTP/1.1 200 OK\r\n"
-                    "Content-Type: text/html; charset=UTF-8\r\n"
-                    "\r\n"
-                )
-                connectionSocket.send(outputdata.encode())
-
-                for i in f:
-                    connectionSocket.send(i)
-                f.close()
-
-            else:
-                outputdata = (
-                    "HTTP/1.1 404 Not Found\r\n"
-                    "Content-Type: text/html; charset=UTF-8\r\n"
-                    "\r\n"
-                )
-                connectionSocket.send(outputdata.encode())
-            connectionSocket.close()
-
-        except Exception as e:
-            print(f"Error: {e}")
             outputdata = (
-                "HTTP/1.1 500 Internal Server Error\r\n"
+                "HTTP/1.1 200 OK\r\n"
                 "Content-Type: text/html; charset=UTF-8\r\n"
                 "\r\n"
             )
             connectionSocket.send(outputdata.encode())
+            print("200 OK")
+
+            for i in f:
+                connectionSocket.send(i)
+            f.close()
+
+        except Exception as e:
+            outputdata = (
+                "HTTP/1.1 404 Not Found\r\n"
+                "Content-Type: text/html; charset=UTF-8\r\n"
+                "\r\n"
+            )
+            connectionSocket.send(outputdata.encode())
+            print("404 Not Found")
         connectionSocket.close()
         sys.exit()
 
